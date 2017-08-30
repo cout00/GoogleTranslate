@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace GoogleTranslate.Core
 {
-    interface IHttpParser
+    public interface IHttpRequest
     {
-
+        string GetRequestData();
     }
 }
