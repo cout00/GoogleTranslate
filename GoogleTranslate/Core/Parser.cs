@@ -10,16 +10,18 @@ namespace GoogleTranslate.Core
     public class Parser
     {
         IHttpRequest Request;
-        public Parser(IHttpRequest RequestObj)
+        string text;
+        public Parser(IHttpRequest RequestObj, string NotTranslatedText)
         {
             Request = RequestObj;
+            text = NotTranslatedText;
         }
         //{"code":200,"lang":"en-ru","text":["привет мир"]}
         public Tuple<NotTranslatedException, string> GetTranslate()
         {
             try
             {
-                string ParseStr = Request.GetRequestData();
+                string ParseStr = Request.GetRequestData(text);
                 dynamic stuff = JsonConvert.DeserializeObject(ParseStr);
                 var code = Convert.ToInt32((string)stuff.code.ToString());
                 var tes2t = (string)stuff.text.ToString();

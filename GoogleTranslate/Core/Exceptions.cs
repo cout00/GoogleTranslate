@@ -19,7 +19,7 @@ namespace GoogleTranslate.Core
         {
             ExceptionCode = ExCode;
             InitDictionary();
-            TranslationMistakeInfo = MistakeDistionary[ExCode];       
+            TranslationMistakeInfo = MistakeDistionary[ExCode];
         }
 
         void InitDictionary()

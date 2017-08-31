@@ -8,6 +8,6 @@ namespace GoogleTranslate.Core
 {
     public interface IHttpRequest
     {
-        string GetRequestData();
+        string GetRequestData(string inputText);
     }
 }

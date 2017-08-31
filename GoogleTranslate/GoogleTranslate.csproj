@@ -48,11 +48,21 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsInput, Version=1.0.4.0, Culture=neutral, PublicKeyToken=9b287f7dc5073cad, processorArchitecture=MSIL">
+      <HintPath>..\packages\InputSimulator.1.0.4.0\lib\net20\WindowsInput.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="answerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="answerForm.Designer.cs">
+      <DependentUpon>answerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Core\Exceptions.cs" />
     <Compile Include="Core\Extensions.cs" />
-    <Compile Include="Core\HttpRequest.cs" />
+    <Compile Include="Core\YandexHttpRequest.cs" />
     <Compile Include="Core\IHttpRequest.cs" />
     <Compile Include="Core\Parser.cs" />
     <Compile Include="Core\WinHook.cs" />
@@ -64,6 +74,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="answerForm.resx">
+      <DependentUpon>answerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="emptyForm.resx">
       <DependentUpon>emptyForm.cs</DependentUpon>
     </EmbeddedResource>
