@@ -27,9 +27,6 @@ namespace GoogleTranslate
             KeyHook kh = new KeyHook();
             kh.ShiftAndControlHook();
             kh.OnKeyPush += Kh_OnKeyPush;
-            //TesHook th = new TesHook();
-            //th.ShiftAndControlHook();
-
         }
 
         private void Kh_OnKeyPush(object sender, KeyHook.KeyPressedArgs e)
@@ -39,7 +36,7 @@ namespace GoogleTranslate
             Point lpPoint;
             GetCursorPos(out lpPoint);
             var t = Clipboard.GetText();
-            Parser parser = new Parser(new YandexHttpRequest(),t);
+            YandexParser parser = new YandexParser(new YandexHttpRequest(),t);
             var tr= parser.GetTranslate();
             if (tr.Item1 == null)
             {

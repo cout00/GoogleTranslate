@@ -3,59 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace GoogleTranslate.Core
 {
-    public class Parser
+    public abstract class Parser :IParser
     {
-        IHttpRequest Request;
-        string text;
+        protected IHttpRequest Request;
+        protected string Text;
+
+        protected abstract Tuple<NotTranslatedException, string> Parse(string UnParsedString);
+
         public Parser(IHttpRequest RequestObj, string NotTranslatedText)
         {
             Request = RequestObj;
-            text = NotTranslatedText;
+            Text = NotTranslatedText;
         }
-        //{"code":200,"lang":"en-ru","text":["привет мир"]}
+
+        protected abstract void GetParsMistakes(ref Dictionary<int, string> Mistakes);
+        
+
+        public void GetMistakes(ref Dictionary<int, string> Mistakes)
+        {
+            GetParsMistakes(ref Mistakes);
+        }
+
         public Tuple<NotTranslatedException, string> GetTranslate()
         {
+            string ParseStr = "";
             try
             {
-                string ParseStr = Request.GetRequestData(text);
-                dynamic stuff = JsonConvert.DeserializeObject(ParseStr);
-                var code = Convert.ToInt32((string)stuff.code.ToString());
-                var tes2t = (string)stuff.text.ToString();
-                var newStr = "";
-                if (code!=200)
-                {
-                    return new Tuple<NotTranslatedException, string>(new NotTranslatedException(code), "");
-                }
-                for (int i = 0; i < tes2t.Length; i++)
-                {
-                    if (!((int)tes2t[i]).In(new int[] { 93, 91, 13, 10, 34 }))
-                    {
-                        if (((int)tes2t[i]).In(new int[] { 32 }) && (((int)tes2t[i - 1]).In(new int[] { 32 })|| ((int)tes2t[i + 1]).In(new int[] { 32 })))
-                        {
-                            continue;
-                        }
-                        newStr += tes2t[i];
-                    }
-                }
-                if (newStr.Length<1)
-                {
-                    return new Tuple<NotTranslatedException, string>(new NotTranslatedException(42), "");
-                }
-                newStr.Trim().Trim();
-                return new Tuple<NotTranslatedException, string>(null, newStr);
+                ParseStr = Request.GetRequestData(Text);
             }
-            catch (NotTranslatedException)
+            catch (Exception)
             {
-                return new Tuple<NotTranslatedException, string>(new NotTranslatedException(42), ""); 
+                return new Tuple<NotTranslatedException, string>(new NotTranslatedException(this, 42), "");
             }
-            
+            return Parse(ParseStr);
         }
-
-
-
     }
 }

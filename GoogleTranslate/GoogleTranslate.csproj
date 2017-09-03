@@ -62,10 +62,13 @@
     </Compile>
     <Compile Include="Core\Exceptions.cs" />
     <Compile Include="Core\Extensions.cs" />
+    <Compile Include="Core\IParser.cs" />
+    <Compile Include="Core\MistakesAttribute.cs" />
+    <Compile Include="Core\Parser.cs" />
     <Compile Include="Core\TesHook.cs" />
     <Compile Include="Core\YandexHttpRequest.cs" />
     <Compile Include="Core\IHttpRequest.cs" />
-    <Compile Include="Core\Parser.cs" />
+    <Compile Include="Core\YandexParser.cs" />
     <Compile Include="Core\WinHook.cs" />
     <Compile Include="emptyForm.cs">
       <SubType>Form</SubType>
