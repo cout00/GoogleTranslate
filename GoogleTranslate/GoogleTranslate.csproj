@@ -62,6 +62,7 @@
     </Compile>
     <Compile Include="Core\Exceptions.cs" />
     <Compile Include="Core\Extensions.cs" />
+    <Compile Include="Core\TesHook.cs" />
     <Compile Include="Core\YandexHttpRequest.cs" />
     <Compile Include="Core\IHttpRequest.cs" />
     <Compile Include="Core\Parser.cs" />
