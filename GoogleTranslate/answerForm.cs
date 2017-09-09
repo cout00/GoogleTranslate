@@ -14,27 +14,11 @@ using GoogleTranslate.Core;
 
 namespace GoogleTranslate
 {   
-    public partial class answerForm :Form
+    public partial class answerForm :Form, IShowTypeForm
     {
         internal int DebugLinesCount;
-        string showText;
         const int MaxWidth = 200;
-
-        public string ShowText
-        {
-            get
-            {
-                return this.showText;
-            }
-
-            set
-            {
-                showText = value;
-                FormSize();
-            }
-        }
-
-        public void FormSize()
+        void FormSize(string showText)
         {
             DebugLinesCount = 0;
             label1.Font = new Font(new FontFamily("Arial"), 15);
@@ -70,6 +54,11 @@ namespace GoogleTranslate
             Height = TextRenderer.MeasureText(curText, label1.Font).Height;
             Width = TextRenderer.MeasureText(curText, label1.Font).Width;
             label1.Text = curText;
+        }
+
+        public void ShowResult(string result)
+        {
+            FormSize(result);    
         }
 
         public answerForm()

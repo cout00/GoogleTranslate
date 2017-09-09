@@ -54,6 +54,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="answerBalloonTip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="answerBalloonTip.Designer.cs">
+      <DependentUpon>answerBalloonTip.cs</DependentUpon>
+    </Compile>
     <Compile Include="answerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,7 +69,9 @@
     <Compile Include="Core\Exceptions.cs" />
     <Compile Include="Core\Extensions.cs" />
     <Compile Include="Core\IParser.cs" />
+    <Compile Include="Core\IShowTypeForm.cs" />
     <Compile Include="Core\MistakesAttribute.cs" />
+    <Compile Include="Core\ObjectPool.cs" />
     <Compile Include="Core\Parser.cs" />
     <Compile Include="Core\TesHook.cs" />
     <Compile Include="Core\YandexHttpRequest.cs" />
@@ -78,6 +86,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="answerBalloonTip.resx">
+      <DependentUpon>answerBalloonTip.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="answerForm.resx">
       <DependentUpon>answerForm.cs</DependentUpon>
     </EmbeddedResource>

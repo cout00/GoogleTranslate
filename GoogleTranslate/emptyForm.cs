@@ -41,7 +41,7 @@ namespace GoogleTranslate
             if (tr.Item1 == null)
             {
                 answerForm af = new answerForm();
-                af.ShowText = tr.Item2;
+                //af.ShowText = tr.Item2;
                 af.Top = lpPoint.Y;
                 af.Left = lpPoint.X;
                 af.Show();
