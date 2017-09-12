@@ -73,6 +73,7 @@
     <Compile Include="Core\MistakesAttribute.cs" />
     <Compile Include="Core\ObjectPool.cs" />
     <Compile Include="Core\Parser.cs" />
+    <Compile Include="Core\Pool.cs" />
     <Compile Include="Core\TesHook.cs" />
     <Compile Include="Core\YandexHttpRequest.cs" />
     <Compile Include="Core\IHttpRequest.cs" />

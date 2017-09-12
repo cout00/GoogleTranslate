@@ -22,6 +22,7 @@ namespace GoogleTranslate
         public void ShowResult(string result)
         {
             Notification.Text = result;
+            Notification.BalloonTipText = "memem";
             Notification.ShowBalloonTip(1000);
         }
     }

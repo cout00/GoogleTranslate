@@ -17,11 +17,15 @@ namespace GoogleTranslate.Tests
         [Test]
         public void hello()
         {
-            ObjectPool<IShowTypeForm> objp = new ObjectPool<IShowTypeForm>();
+            //ObjectPool<IShowTypeForm> objp = new ObjectPool<IShowTypeForm>();
+            //Task.Factory.StartNew();            
+            //var stub = MockRepository.GenerateStub<IShowTypeForm>();
 
             var me = new answerBalloonTip();
-            objp.Add(me);
-            objp.Add(me);
+            //Pool.ResultFormPool.Add(me);
+            //Pool.ResultFormPool.Add(me);
+            Pool.ResultFormPool.Add(me);
+            Pool.ResultFormPool.InvokeObj(typeof(answerBalloonTip), "hello");
             
         }
 

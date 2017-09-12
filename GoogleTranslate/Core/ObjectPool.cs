@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GoogleTranslate.Core
 {
-    class ObjectPool<SomeType>:List<SomeType>, IEqualityComparer<SomeType> where SomeType : IShowTypeForm
+    public class ObjectPool<SomeType>:List<SomeType>, IEqualityComparer<SomeType> where SomeType : IShowTypeForm
     {
 
         public new void Add(SomeType newObj)
