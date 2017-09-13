@@ -13,22 +13,45 @@ namespace GoogleTranslate.Tests
     [TestFixture]
     public class ResultGuiTests
     {
+        ObjectPool<IShowTypeForm> MockOfPool;
 
-        [Test]
-        public void hello()
+        [SetUp]
+        public void InitAll()
         {
-            //ObjectPool<IShowTypeForm> objp = new ObjectPool<IShowTypeForm>();
-            //Task.Factory.StartNew();            
-            //var stub = MockRepository.GenerateStub<IShowTypeForm>();
+            MockOfPool = MockRepository.GenerateMock<ObjectPool<IShowTypeForm>>();
+            Pool.GetDerivativeTypes().ForEach(instanse =>
+            {
+                MockOfPool.Add((IShowTypeForm)Activator.CreateInstance(instanse));
+            });
 
-            var me = new answerBalloonTip();
-            //Pool.ResultFormPool.Add(me);
-            //Pool.ResultFormPool.Add(me);
-            Pool.ResultFormPool.Add(me);
-            Pool.ResultFormPool.InvokeObj(typeof(answerBalloonTip), "hello");
-            
+     
+
+        }
+        [Test]
+        public void PoolContainsRightValues()
+        {
+            var types = Pool.GetDerivativeTypes();
+            CollectionAssert.AreEqual(MockOfPool.Select(a => a.GetType()), types);
+        }
+        [Test]
+        public void PoolIsSingltoneCollection()
+        {
+            var oldCount = MockOfPool.Count();
+            MockOfPool.Add(new answerBalloonTip());
+            var newCount = MockOfPool.Count;
+            Assert.That(oldCount, Is.EqualTo(newCount));
         }
 
+        //#KOLHOZ STYLE
+        [Test]        
+        public void PoolWorksRight()
+        {
+            MockOfPool.Remove(typeof(answerBalloonTip));
+            Assert.That(() =>
+            {
+                CollectionAssert.Contains(MockOfPool.Select(a => a.GetType()), typeof(answerBalloonTip));
+            }, Throws.TypeOf<AssertionException>());
+        }
         [Test]
         public void TestFormSize()
         {

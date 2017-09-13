@@ -7,15 +7,23 @@ using System.Threading.Tasks;
 
 namespace GoogleTranslate.Core
 {
-    public class ObjectPool<SomeType>:List<SomeType>, IEqualityComparer<SomeType> where SomeType : IShowTypeForm
+    public class ObjectPool<SomeType> :List<SomeType>, IEqualityComparer<SomeType> where SomeType : IShowTypeForm
     {
 
         public new void Add(SomeType newObj)
         {
-            if (!this.Contains(newObj,this))
+            if (!this.Contains(newObj, this))
             {
                 base.Add(newObj);
             }
+        }
+
+        public new void Remove(Type inpType)
+        {
+            RemoveAll((a) =>
+            {
+                return a.GetType().Equals(inpType) ? true : false;
+            });
         }
 
 
@@ -23,7 +31,7 @@ namespace GoogleTranslate.Core
         {
             foreach (var item in this)
             {
-                if (item.GetType()==nameObj)
+                if (item.GetType() == nameObj)
                 {
                     item.ShowResult(ctrParams);
                 }
@@ -32,7 +40,7 @@ namespace GoogleTranslate.Core
 
         public bool Equals(SomeType x, SomeType y)
         {
-            if (x.GetType().Name==y.GetType().Name)
+            if (x.GetType().Name == y.GetType().Name)
             {
                 return true;
             }
