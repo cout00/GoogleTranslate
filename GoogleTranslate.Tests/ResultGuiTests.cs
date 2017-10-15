@@ -53,7 +53,7 @@ namespace GoogleTranslate.Tests
         public void TestFormSize()
         {
             answerForm testForm = new answerForm();
-
+            ////
             //testForm.ShowText = "qweqweqeqe qwe qe qwe qwe qw qwe sa dasd asd asd ";
             Assert.That(testForm.DebugLinesCount == 2);
             Assert.That(testForm.Width >= 200);
