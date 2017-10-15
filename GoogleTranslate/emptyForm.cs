@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsInput;
 using WindowsInput.Native;
+//using DBWorkStation;
 
 namespace GoogleTranslate
 {
@@ -20,13 +21,18 @@ namespace GoogleTranslate
     {
         [DllImport("user32.dll")]
         public static extern bool GetCursorPos(out Point lpPoint);
+        IShowTypeForm curForm;
+
+
 
         public emptyForm()
         {
             InitializeComponent();
             KeyHook kh = new KeyHook();
             kh.ShiftAndControlHook();
-            kh.OnKeyPush += Kh_OnKeyPush;
+            KeyHook.OnKeyPush += Kh_OnKeyPush;
+            curForm = new answerForm();
+            
         }
 
         private void Kh_OnKeyPush(object sender, KeyHook.KeyPressedArgs e)
@@ -40,11 +46,8 @@ namespace GoogleTranslate
             var tr= parser.GetTranslate();
             if (tr.Item1 == null)
             {
-                answerForm af = new answerForm();
-                //af.ShowText = tr.Item2;
-                af.Top = lpPoint.Y;
-                af.Left = lpPoint.X;
-                af.Show();
+                curForm.ShowPos(lpPoint.X, lpPoint.Y);
+                curForm.ShowResult(tr.Item2);                               
             }
             else
                 throw tr.Item1;

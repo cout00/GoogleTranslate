@@ -39,16 +39,16 @@ namespace GoogleTranslate.Core
 
         public delegate IntPtr ShiftAltCtrlProc(int nCode, IntPtr wParam, IntPtr lParam);
 
-        private ShiftAltCtrlProc shiftCallBack;
-        private IntPtr m_hHook = IntPtr.Zero;
-        public event EventHandler<KeyPressedArgs> OnKeyPush;
+        static ShiftAltCtrlProc shiftCallBack;
+        static IntPtr m_hHook = IntPtr.Zero;
+        public static event EventHandler<KeyPressedArgs> OnKeyPush;
 
         public void ShiftAndControlUnHook()
         {
             UnhookWindowsHookEx(m_hHook);
         }
 
-        public KeyHook()
+        static KeyHook()
         {
             shiftCallBack = LowLevelKeyboardHookProc_shift;
         }
@@ -59,7 +59,7 @@ namespace GoogleTranslate.Core
             m_hHook = SetWindowsHookEx(WH_KEYBOARD_LL, shiftCallBack, GetModuleHandle(IntPtr.Zero), 0);
         }
 
-        public IntPtr LowLevelKeyboardHookProc_shift(
+        static IntPtr LowLevelKeyboardHookProc_shift(
                 int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
@@ -68,7 +68,8 @@ namespace GoogleTranslate.Core
                 KBDLLHOOKSTRUCT objKeyInfo = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
                 if ((objKeyInfo.key == Keys.Q) && Convert.ToBoolean(result & 1))
                 {
-                    OnKeyPush(this, new KeyPressedArgs(objKeyInfo.key));
+                    OnKeyPush(null, new KeyPressedArgs(objKeyInfo.key));
+                    return (IntPtr)2;
                 }
             }
             return CallNextHookEx(m_hHook, nCode, wParam, lParam);

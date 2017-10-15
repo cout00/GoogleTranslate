@@ -19,6 +19,11 @@ namespace GoogleTranslate
             Visible = false;
         }
 
+        public void ShowPos(int Left, int Right)
+        {
+            //
+        }
+
         public void ShowResult(string result)
         {
             Notification.Text = result;

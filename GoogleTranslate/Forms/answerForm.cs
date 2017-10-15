@@ -58,13 +58,25 @@ namespace GoogleTranslate
 
         public void ShowResult(string result)
         {
-            FormSize(result);    
+            FormSize(result);
+            Show(); 
         }
 
         public answerForm()
         {
             TopMost = true;
             InitializeComponent();
+        }
+
+        private void answerForm_Deactivate(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        public void ShowPos(int Left, int Right)
+        {
+            this.Left = Left;
+            this.Top = Right;
         }
     }
 }

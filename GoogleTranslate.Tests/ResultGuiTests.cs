@@ -23,9 +23,6 @@ namespace GoogleTranslate.Tests
             {
                 MockOfPool.Add((IShowTypeForm)Activator.CreateInstance(instanse));
             });
-
-     
-
         }
         [Test]
         public void PoolContainsRightValues()
