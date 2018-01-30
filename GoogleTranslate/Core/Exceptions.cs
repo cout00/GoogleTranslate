@@ -8,28 +8,28 @@ namespace GoogleTranslate.Core
 {
 
     [Serializable]
-    public class NotTranslatedException :Exception
+    public sealed class NotTranslatedException :Exception
     {
-        Dictionary<int, string> MistakeDistionary = new Dictionary<int, string>();
+        private readonly Dictionary<int, string> _mistakeDistionary = new Dictionary<int, string>();
 
         public int ExceptionCode { get; }
         public string TranslationMistakeInfo { get; set; }
         public NotTranslatedException() { }
-        public NotTranslatedException(IParser InitData, int ExCode)
+        public NotTranslatedException(IParser initData, int exCode)
         {
-            ExceptionCode = ExCode;
+            ExceptionCode = exCode;
             InitDictionary();
-            InitData.GetMistakes(ref MistakeDistionary);
-            TranslationMistakeInfo = MistakeDistionary[ExCode];
+            initData.GetMistakes(ref _mistakeDistionary);
+            TranslationMistakeInfo = _mistakeDistionary[exCode];
         }
 
-        virtual protected void InitDictionary()
+        private void InitDictionary()
         {
-            MistakeDistionary.Add(42, "Нет данных");
-            MistakeDistionary.Add(300, "Сервер недоступен");
+            _mistakeDistionary.Add(42, "Нет данных");
+            _mistakeDistionary.Add(300, "Сервер недоступен");
         }
 
-        protected NotTranslatedException(
+        private NotTranslatedException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }

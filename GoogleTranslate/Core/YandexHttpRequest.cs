@@ -10,11 +10,10 @@ namespace GoogleTranslate.Core
 {
     public class YandexHttpRequest :IHttpRequest
     {
+        private const string Key = "trnsl.1.1.20170830T095657Z.cebe39bf87ebd94c.0b9492d1930a6c88ff7b712891d7e8c46910f402";
         public string GetRequestData(string inputText)
-        {
-            
-                var key = "trnsl.1.1.20170830T095657Z.cebe39bf87ebd94c.0b9492d1930a6c88ff7b712891d7e8c46910f402";
-                var conString = $"https://translate.yandex.net/api/v1.5/tr.json/translate?key= {key} &lang=en-ru&text={inputText}";
+        {            
+                var conString = $"https://translate.yandex.net/api/v1.5/tr.json/translate?key= {Key} &lang=en-ru&text={inputText}";
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(conString);
                 req.Method = "POST";
                 req.Accept = "*/*";
@@ -25,7 +24,6 @@ namespace GoogleTranslate.Core
                     return stream.ReadToEnd();
                 }
             
-
         }
     }
 }

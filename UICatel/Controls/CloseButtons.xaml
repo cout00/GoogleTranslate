@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="UICatel.Controls.CloseButtons"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UICatel.Controls"
+             x:Name="NonClienButtons"
+             Height="25" Width="190">
+    <UserControl.Resources>
+        <DataTemplate x:Key="CheckBoxVSStyle">
+            <Grid>
+                <Path x:Name="path" Data="M4.0079998,0.68575003 L4.0254366,7.870023 6.6249156,7.8570022 6.6251872,0.68418753 z M2.5986249,-0.013924261 L10.700253,0.00066678999 10.708248,7.895258 12.999763,7.9119246 13.008,8.9918708 7.7079999,8.9918708 7.68835,12.992 5.6238615,13.017 5.6030548,9.018176 0.027166233,8.9920237 0.010666022,7.9890074 2.6082491,7.9818358 z" Fill="White" Margin="0.002,-0.006,0,-0.025" Stretch="Fill" Stroke="Black" StrokeThickness="0" RenderTransformOrigin="0.5,0.5">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+            </Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
+                    <Setter Property="RenderTransform" TargetName="path">
+                        <Setter.Value>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="90"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </UserControl.Resources>
+
+
+    <Grid Name="grdMain" Width="{Binding Width}" Height="{Binding Height}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{Binding Height, ElementName=grdMain}">
+            </RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="ButtonClose" Height="{Binding Height}" ContentTemplate="{StaticResource ButtonCross}" Style="{StaticResource StyleSquareButton}" Grid.Column="2" Click="ButtonClose_Click_1"/>
+        <CheckBox x:Name="CheckBoxConsolidate" IsChecked="{Binding Path=ConsolidateWindow, ElementName=NonClienButtons}" Grid.Column="1" Height="{Binding Height}" ContentTemplate="{StaticResource CheckBoxVSStyle}" Style="{StaticResource StyleSquareCheckBox}">
+            <CheckBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </CheckBox.RenderTransform>
+        </CheckBox>
+        <Button Grid.Column="0" x:Name="ButtonMinimize" Height="{Binding Height}" ContentTemplate="{StaticResource ButtonMinimize}" Style="{StaticResource StyleSquareButton}" Click="ButtonMinimize_Click"/>
+    </Grid>
+
+</UserControl>

@@ -11,34 +11,34 @@ namespace GoogleTranslate.Core
         protected IHttpRequest Request;
         protected string Text;
 
-        protected abstract Tuple<NotTranslatedException, string> Parse(string UnParsedString);
+        protected abstract Tuple<NotTranslatedException, string> Parse(string unParsedString);
 
-        public Parser(IHttpRequest RequestObj, string NotTranslatedText)
+        protected Parser(IHttpRequest requestObj, string notTranslatedText)
         {
-            Request = RequestObj;
-            Text = NotTranslatedText;
+            Request = requestObj;
+            Text = notTranslatedText;
         }
 
-        protected abstract void GetParsMistakes(ref Dictionary<int, string> Mistakes);
+        protected abstract void GetParsMistakes(ref Dictionary<int, string> mistakes);
         
 
-        public void GetMistakes(ref Dictionary<int, string> Mistakes)
+        public void GetMistakes(ref Dictionary<int, string> mistakes)
         {
-            GetParsMistakes(ref Mistakes);
+            GetParsMistakes(ref mistakes);
         }
 
         public Tuple<NotTranslatedException, string> GetTranslate()
         {
-            string ParseStr = "";
+            string parseStr = "";
             try
             {
-                ParseStr = Request.GetRequestData(Text);
+                parseStr = Request.GetRequestData(Text);
             }
             catch (Exception)
             {
                 return new Tuple<NotTranslatedException, string>(new NotTranslatedException(this, 42), "");
             }
-            return Parse(ParseStr);
+            return Parse(parseStr);
         }
     }
 }

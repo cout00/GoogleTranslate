@@ -20,10 +20,7 @@ namespace GoogleTranslate.Core
 
         public new void Remove(Type inpType)
         {
-            RemoveAll((a) =>
-            {
-                return a.GetType().Equals(inpType) ? true : false;
-            });
+            RemoveAll((a) => a.GetType() == inpType ? true : false);
         }
 
 
@@ -40,11 +37,7 @@ namespace GoogleTranslate.Core
 
         public bool Equals(SomeType x, SomeType y)
         {
-            if (x.GetType().Name == y.GetType().Name)
-            {
-                return true;
-            }
-            return false;
+            return x != null && (y != null && x.GetType().Name == y.GetType().Name);
         }
 
         public int GetHashCode(SomeType obj)

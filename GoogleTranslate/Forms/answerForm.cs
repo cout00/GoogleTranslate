@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.CompilerServices;
-using GoogleTranslate.Core;
+using FTranslate.Core.Interfaces;
+using FTranslate.Core;
 
 [assembly: InternalsVisibleTo("GoogleTranslate.Tests")]
 

@@ -10,46 +10,42 @@ namespace GoogleTranslate.Core
     public class YandexParser :Parser
     {
 
-        public YandexParser(IHttpRequest RequestObj, string NotTranslatedText):base(RequestObj,NotTranslatedText)
+        public YandexParser(IHttpRequest requestObj, string notTranslatedText):base(requestObj,notTranslatedText)
         {
             
         }
-
-
-        //{"code":200,"lang":"en-ru","text":["привет мир"]}
         
-        protected override void GetParsMistakes(ref Dictionary<int, string> Mistakes)
+        protected override void GetParsMistakes(ref Dictionary<int, string> mistakes)
         {
-            Mistakes.Add(401, "Неправильный API-ключ");
-            Mistakes.Add(402, "API-ключ заблокирован");
-            Mistakes.Add(404, "Превышено суточное ограничение на объем переведенного текста");
-            Mistakes.Add(413, "Превышен максимально допустимый размер текста");
-            Mistakes.Add(422, "Текст не может быть переведен");
-            Mistakes.Add(501, "Заданное направление перевода не поддерживается");
+            mistakes.Add(401, "Неправильный API-ключ");
+            mistakes.Add(402, "API-ключ заблокирован");
+            mistakes.Add(404, "Превышено суточное ограничение на объем переведенного текста");
+            mistakes.Add(413, "Превышен максимально допустимый размер текста");
+            mistakes.Add(422, "Текст не может быть переведен");
+            mistakes.Add(501, "Заданное направление перевода не поддерживается");
         }
 
-        protected override Tuple<NotTranslatedException, string> Parse(string UnParsedString)
+        protected override Tuple<NotTranslatedException, string> Parse(string unParsedString)
         {
             try
             {
-
-                dynamic stuff = JsonConvert.DeserializeObject(UnParsedString);
-                var code = Convert.ToInt32((string)stuff.code.ToString());
-                var tes2t = (string)stuff.text.ToString();
+                dynamic deserializedObject = JsonConvert.DeserializeObject(unParsedString);
+                var code = Convert.ToInt32((string)deserializedObject.code.ToString());
+                var jsonString = (string)deserializedObject.text.ToString();
                 var newStr = "";
                 if (code != 200)
                 {
                     return new Tuple<NotTranslatedException, string>(new NotTranslatedException(this, code), "");
                 }
-                for (int i = 0; i < tes2t.Length; i++)
+                for (int i = 0; i < jsonString.Length; i++)
                 {
-                    if (!((int)tes2t[i]).In(new int[] { 93, 91, 13, 10, 34 }))
+                    if (!((int)jsonString[i]).In(new int[] { 93, 91, 13, 10, 34 }))
                     {
-                        if (((int)tes2t[i]).In(new int[] { 32 }) && (((int)tes2t[i - 1]).In(new int[] { 32 }) || ((int)tes2t[i + 1]).In(new int[] { 32 })))
+                        if (((int)jsonString[i]).In(new int[] { 32 }) && (((int)jsonString[i - 1]).In(new int[] { 32 }) || ((int)jsonString[i + 1]).In(new int[] { 32 })))
                         {
                             continue;
                         }
-                        newStr += tes2t[i];
+                        newStr += jsonString[i];
                     }
                 }
                 if (newStr.Length < 1)

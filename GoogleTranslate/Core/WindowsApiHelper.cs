@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -8,14 +9,15 @@ using System.Windows.Forms;
 
 namespace GoogleTranslate.Core
 {
-    public class KeyHook
+    public static class WindowsApiHelper
     {
         [System.Runtime.InteropServices.StructLayout(
-        System.Runtime.InteropServices.LayoutKind.Sequential)]
+            System.Runtime.InteropServices.LayoutKind.Sequential)]
         private struct KBDLLHOOKSTRUCT
         {
-            public Keys key;
+            public readonly Keys key;
         }
+
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_SYSKEYDOWN = 0x0104;
@@ -37,45 +39,54 @@ namespace GoogleTranslate.Core
         [DllImport("User32.dll")]
         public static extern short GetAsyncKeyState(Keys ArrowKeys);
 
+        [DllImport("user32.dll")]
+        public static extern bool GetCursorPos(out Point lpPoint);
+
+
         public delegate IntPtr ShiftAltCtrlProc(int nCode, IntPtr wParam, IntPtr lParam);
 
-        static ShiftAltCtrlProc shiftCallBack;
-        static IntPtr m_hHook = IntPtr.Zero;
+        static readonly ShiftAltCtrlProc ShiftCallBack;
+        static IntPtr _mHHook = IntPtr.Zero;
         public static event EventHandler<KeyPressedArgs> OnKeyPush;
 
-        public void ShiftAndControlUnHook()
+        public static void RemoveKeyBoardHook()
         {
-            UnhookWindowsHookEx(m_hHook);
+            UnhookWindowsHookEx(_mHHook);
         }
 
-        static KeyHook()
+        static WindowsApiHelper()
         {
-            shiftCallBack = LowLevelKeyboardHookProc_shift;
+            ShiftCallBack = LowLevelKeyboardHookProc;
         }
 
-        public void ShiftAndControlHook()
+        public static void SetKeyBoardHook()
         {
-
-            m_hHook = SetWindowsHookEx(WH_KEYBOARD_LL, shiftCallBack, GetModuleHandle(IntPtr.Zero), 0);
+            _mHHook = SetWindowsHookEx(WH_KEYBOARD_LL, ShiftCallBack, GetModuleHandle(IntPtr.Zero), 0);
         }
 
-        static IntPtr LowLevelKeyboardHookProc_shift(
-                int nCode, IntPtr wParam, IntPtr lParam)
+        public static Point GetCurMousePos()
         {
-            if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
+            Point lpPoint;
+            GetCursorPos(out lpPoint);
+            return lpPoint;
+        }
+
+        static IntPtr LowLevelKeyboardHookProc(int nCode, IntPtr wParam, IntPtr lParam)
+        {
+            if (nCode >= 0 && wParam == (IntPtr) WM_KEYDOWN)
             {
                 var result = GetAsyncKeyState(Keys.LControlKey);
-                KBDLLHOOKSTRUCT objKeyInfo = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
+                KBDLLHOOKSTRUCT objKeyInfo = (KBDLLHOOKSTRUCT) Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
                 if ((objKeyInfo.key == Keys.Q) && Convert.ToBoolean(result & 1))
                 {
-                    OnKeyPush(null, new KeyPressedArgs(objKeyInfo.key));
-                    return (IntPtr)2;
+                    OnKeyPush?.Invoke(null, new KeyPressedArgs(objKeyInfo.key));
+                    return (IntPtr) 2;
                 }
             }
-            return CallNextHookEx(m_hHook, nCode, wParam, lParam);
+            return CallNextHookEx(_mHHook, nCode, wParam, lParam);
         }
 
-        public class KeyPressedArgs :EventArgs
+        public class KeyPressedArgs : EventArgs
         {
             public Keys PressedKey { get; set; }
 

@@ -65,9 +65,9 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GoogleTranslate\GoogleTranslate.csproj">
-      <Project>{2d06c751-823a-438d-b475-8d7a6e58c7b3}</Project>
-      <Name>GoogleTranslate</Name>
+    <ProjectReference Include="..\FTranslate.Core\FTranslate.Core.csproj">
+      <Project>{5018c778-118e-4dde-a50e-f09af8991ac8}</Project>
+      <Name>FTranslate.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
