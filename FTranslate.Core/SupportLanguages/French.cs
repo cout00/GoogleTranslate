@@ -7,19 +7,24 @@ using FTranslate.Core.BaseClasses;
 
 namespace FTranslate.Core.SupportLanguages
 {
-    public class French :LanguageString
+    public class French :Language
     {        
-        private French():base()
+        private French()
         {            
-            ISO631_1_LanguageCode = "fr";
-            ISO631_2_LanguageCode = "fra";
-            ISO631_3_LanguageCode = "fra";
-            GOST_7_75_97_LanguageCode = "фра";
+            Iso6311LanguageCode = "fr";
+            Iso6312LanguageCode = "fra";
+            Iso6313LanguageCode = "fra";
+            Gost77597LanguageCode = "фра";
         }
         protected override void InitializationCode()
         {
             Lematizer = Resource.full7z_multext_fr;
             base.InitializationCode();
+        }
+
+        public override string ToString()
+        {
+            return "French";
         }
     }
 }

@@ -7,14 +7,16 @@ namespace FTranslate.Core.BaseClasses
     public abstract class Parser :IParser
     {
         protected IHttpRequest Request;
-        protected string Text;
+        protected Language InputLanguageObj;
+        protected Language OutPutLanguageObj;
 
-        protected abstract Tuple<NotTranslatedException, string> Parse(string unParsedString);
+        protected abstract NotTranslatedException Parse(string unParsedString);
 
-        protected Parser(IHttpRequest requestObj, string notTranslatedText)
+        protected Parser(IHttpRequest requestObj, Language inputLanguageObj, Language outPutLanguageObj)
         {
             Request = requestObj;
-            Text = notTranslatedText;
+            InputLanguageObj = inputLanguageObj;
+            OutPutLanguageObj = outPutLanguageObj;
         }
 
         protected abstract void GetParsMistakes(ref Dictionary<int, string> mistakes);
@@ -25,16 +27,18 @@ namespace FTranslate.Core.BaseClasses
             GetParsMistakes(ref mistakes);
         }
 
-        public Tuple<NotTranslatedException, string> GetTranslate()
+        public NotTranslatedException Translate()
         {
             string parseStr = "";
+            OutPutLanguageObj.Text = string.Empty;
             try
             {
-                parseStr = Request.GetRequestData(Text);
+                parseStr = Request.GetRequestData($"{InputLanguageObj.GetLanguageCode()}-{OutPutLanguageObj.GetLanguageCode()}", InputLanguageObj.Text);
+
             }
             catch (Exception)
             {
-                return new Tuple<NotTranslatedException, string>(new NotTranslatedException(this, 42), "");
+                return new NotTranslatedException(this, 42);
             }
             return Parse(parseStr);
         }

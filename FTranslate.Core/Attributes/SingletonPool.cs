@@ -9,13 +9,10 @@ namespace FTranslate.Core.Attributes
     [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
     sealed class SingletonPoolAttribute : Attribute
     {
-        readonly Type poolType;
 
-        public SingletonPoolAttribute(Type poolType)
+        public SingletonPoolAttribute()
         {
-            this.poolType = poolType;
         }
-        public Type PoolType { get; private set; }
 
     }
 }

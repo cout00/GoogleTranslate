@@ -13,7 +13,7 @@ namespace UICatel.Blink
         {
             Dx = 1;
             MaxPos = 0;
-            ((Blink) this).Wnd.Left = -((Blink) this).Wnd.Width;
+            Wnd.Left = -Wnd.Width;
         }        
     }
 }

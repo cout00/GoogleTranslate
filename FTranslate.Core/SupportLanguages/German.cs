@@ -7,20 +7,24 @@ using FTranslate.Core.BaseClasses;
 
 namespace FTranslate.Core.SupportLanguages
 {
-    public class German :LanguageString
+    public class German :Language
     {
-        protected German() : base()
-        {
-            ISO631_1_LanguageCode = "de";
-            ISO631_2_LanguageCode = "deu";
-            ISO631_3_LanguageCode = "deu";
-            GOST_7_75_97_LanguageCode = "нем";
+        protected German(){
+            Iso6311LanguageCode = "de";
+            Iso6312LanguageCode = "deu";
+            Iso6313LanguageCode = "deu";
+            Gost77597LanguageCode = "нем";
         }
 
         protected override void InitializationCode()
         {
             Lematizer = Resource.full7z_multext_ge;
             base.InitializationCode();
+        }
+
+        public override string ToString()
+        {
+            return "German";
         }
     }
 }

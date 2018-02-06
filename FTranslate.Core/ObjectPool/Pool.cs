@@ -17,13 +17,22 @@ namespace FTranslate.Core.ObjectPool
         public static ObjectPool<object> SingletonPool { get;}
 
         internal static IEnumerable<Type> GetDerivedTypes(Type baseType)
-        {
-            return Assembly.GetAssembly(baseType)
+        {         
+             return Assembly.GetAssembly(baseType)
                 .GetTypes()
                 .Where(type => type.IsSubclassOf(baseType))
                 .ToList();
         }
 
+
+        public static IEnumerable<object> GetByParentClass(Type baseType)
+        {
+            foreach (var type in GetDerivedTypes(baseType))
+            {
+                yield return SingletonPool.GetPoolObject(type);
+            }
+        }
+         
         public static async Task ActivatePoolAsync(Type baseType)
         {
             foreach (var type in GetDerivedTypes(baseType))

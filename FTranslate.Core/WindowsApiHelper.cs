@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
+using WindowsInput;
+using WindowsInput.Native;
 
 namespace FTranslate.Core
 {
@@ -67,6 +70,13 @@ namespace FTranslate.Core
             return lpPoint;
         }
 
+        public static void SendGetText()
+        {
+            InputSimulator isim = new InputSimulator();
+            isim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LCONTROL, VirtualKeyCode.VK_C);
+            Thread.Sleep(50);
+        }
+
         static IntPtr LowLevelKeyboardHookProc(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0 && wParam == (IntPtr) WM_KEYDOWN)
@@ -76,7 +86,7 @@ namespace FTranslate.Core
                 if ((objKeyInfo.key == Keys.Q) && Convert.ToBoolean(result & 1))
                 {
                     OnKeyPush?.Invoke(null, new KeyPressedArgs(objKeyInfo.key));
-                    return (IntPtr) 2;
+                    return (IntPtr) 1;
                 }
             }
             return CallNextHookEx(_mHHook, nCode, wParam, lParam);

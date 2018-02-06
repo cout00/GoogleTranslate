@@ -11,7 +11,7 @@ using FTranslate.Core.Interfaces;
 
 namespace GoogleTranslate
 {
-    public partial class answerBalloonTip :Form, IShowTypeForm
+    public partial class answerBalloonTip :Form
     {
         public answerBalloonTip()
         {

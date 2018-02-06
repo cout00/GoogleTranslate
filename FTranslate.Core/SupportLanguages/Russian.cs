@@ -8,19 +8,24 @@ using FTranslate.Core.BaseClasses;
 namespace FTranslate.Core.SupportLanguages
 {
 
-    public class Russian :LanguageString
+    public class Russian :Language
     {
-        protected Russian() : base()
+        protected Russian()
         {
-            ISO631_1_LanguageCode = "ru";
-            ISO631_2_LanguageCode = "rus";
-            ISO631_3_LanguageCode = "rus";
-            GOST_7_75_97_LanguageCode = "рус";
+            Iso6311LanguageCode = "ru";
+            Iso6312LanguageCode = "rus";
+            Iso6313LanguageCode = "rus";
+            Gost77597LanguageCode = "рус";
         }
         protected override void InitializationCode()
         {
             Lematizer = Resource.full7z_mlteast_ru;
             base.InitializationCode();
+        }
+
+        public override string ToString()
+        {
+            return "Russian";
         }
     }
 }

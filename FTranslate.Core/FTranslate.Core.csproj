@@ -48,17 +48,20 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsInput, Version=1.0.4.0, Culture=neutral, PublicKeyToken=9b287f7dc5073cad, processorArchitecture=MSIL">
+      <HintPath>..\packages\InputSimulator.1.0.4.0\lib\net20\WindowsInput.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\PoolInitTarget.cs" />
     <Compile Include="Attributes\SingletonPool.cs" />
-    <Compile Include="BaseClasses\LanguageString.cs" />
+    <Compile Include="BaseClasses\Language.cs" />
     <Compile Include="BaseClasses\Parser.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Interfaces\IHttpRequest.cs" />
     <Compile Include="Interfaces\IParser.cs" />
-    <Compile Include="Interfaces\IShowTypeForm.cs" />
     <Compile Include="ObjectPool\ObjectPool.cs" />
     <Compile Include="ObjectPool\Pool.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -15,7 +15,7 @@ using FTranslate.Core;
 
 namespace GoogleTranslate
 {   
-    public partial class answerForm :Form, IShowTypeForm
+    public partial class answerForm :Form
     {
         internal int DebugLinesCount;
         const int MaxWidth = 200;

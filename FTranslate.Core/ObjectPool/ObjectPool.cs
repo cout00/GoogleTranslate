@@ -11,5 +11,10 @@ namespace FTranslate.Core.ObjectPool
         {            
             return (from item in this where item.Key.Name == nameObj.Name select item.Value).FirstOrDefault();
         }
+
+        public TSomeType GetPoolObject(string key)
+        {
+            return this.FirstOrDefault(pair => pair.Key.Name == key).Value;
+        }
     }
 }

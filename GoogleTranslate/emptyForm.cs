@@ -12,13 +12,13 @@ namespace GoogleTranslate
 {
     public partial class emptyForm :Form
     {        
-        IShowTypeForm curForm;
+        //IShowTypeForm curForm;
 
         public emptyForm()
         {
             InitializeComponent();
             
-            curForm = new answerForm();
+            //curForm = new answerForm();
             WindowsApiHelper.OnKeyPush += Kh_OnKeyPush;
             WindowsApiHelper.SetKeyBoardHook();
         }
@@ -30,8 +30,8 @@ namespace GoogleTranslate
             isim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LCONTROL, VirtualKeyCode.VK_C);
             
             var t = Clipboard.GetText();
-            YandexParser parser = new YandexParser(new YandexHttpRequest(),t);
-            var tr= parser.GetTranslate();
+            //YandexParser parser = new YandexParser(new YandexHttpRequest(),t);
+            //var tr= parser.GetTranslate();
             //if (tr.Item1 == null)
             //{
             //    curForm.ShowPos(lpPoint.X, lpPoint.Y);

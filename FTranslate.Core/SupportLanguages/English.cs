@@ -8,20 +8,25 @@ using FTranslate.Core.BaseClasses;
 
 namespace FTranslate.Core.SupportLanguages
 {
-    public class English : LanguageString
+    public class English : Language
     {
-        protected English() : base()
+        protected English()
         {
-            ISO631_1_LanguageCode = "en";
-            ISO631_2_LanguageCode = "eng";
-            ISO631_3_LanguageCode = "eng";
-            GOST_7_75_97_LanguageCode = "анг";
+            Iso6311LanguageCode = "en";
+            Iso6312LanguageCode = "eng";
+            Iso6313LanguageCode = "eng";
+            Gost77597LanguageCode = "анг";
         }
 
         protected override void InitializationCode()
         {
             Lematizer = Resource.full7z_mlteast_en;
             base.InitializationCode();
+        }
+
+        public override string ToString()
+        {
+            return "English";
         }
     }
 }

@@ -9,7 +9,7 @@ namespace FTranslate.Core.Yandex
     public class YandexParser :Parser
     {
 
-        public YandexParser(IHttpRequest requestObj, string notTranslatedText):base(requestObj,notTranslatedText)
+        public YandexParser(IHttpRequest requestObj, Language inputLanguageObj, Language outPutLanguageObj) :base(requestObj,inputLanguageObj, outPutLanguageObj)
         {
             
         }
@@ -24,7 +24,7 @@ namespace FTranslate.Core.Yandex
             mistakes.Add(501, "Заданное направление перевода не поддерживается");
         }
 
-        protected override Tuple<NotTranslatedException, string> Parse(string unParsedString)
+        protected override NotTranslatedException Parse(string unParsedString)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace FTranslate.Core.Yandex
                 var newStr = "";
                 if (code != 200)
                 {
-                    return new Tuple<NotTranslatedException, string>(new NotTranslatedException(this, code), "");
+                    return new NotTranslatedException(this, code);
                 }
                 for (int i = 0; i < jsonString.Length; i++)
                 {
@@ -49,14 +49,15 @@ namespace FTranslate.Core.Yandex
                 }
                 if (newStr.Length < 1)
                 {
-                    return new Tuple<NotTranslatedException, string>(new NotTranslatedException(this, 42), "");
+                    return new NotTranslatedException(this, 42);
                 }
                 newStr.Trim().Trim();
-                return new Tuple<NotTranslatedException, string>(null, newStr);
+                OutPutLanguageObj.Text = newStr;
+                return null;
             }
             catch (NotTranslatedException)
             {
-                return new Tuple<NotTranslatedException, string>(new NotTranslatedException(this, 42), "");
+                return new NotTranslatedException(this, 42);
             }
         }
     }

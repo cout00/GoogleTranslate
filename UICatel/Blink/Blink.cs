@@ -8,6 +8,13 @@ using System.Windows;
 
 namespace UICatel.Blink
 {
+    public enum State
+    {
+        Minimazed,
+        Maximazed,
+    }
+
+
     public abstract class Blink
     {
         readonly Timer _timer = new Timer();
@@ -16,19 +23,61 @@ namespace UICatel.Blink
         protected int Dx;
         protected bool PositionFinded;
 
+        private State _State;
+
         protected Blink(Window wnd)
         {
+            //_State=State.Minimazed;
             this.Wnd = wnd;
+            wnd.Top = 0;
             _timer.Elapsed += Timer_Elapsed;
-            _timer.Interval = 60;
+        }
+
+        public State State
+        {
+            get { return _State; }
+            set
+            {
+                PositionFinded = false;
+                _State = value;
+                switch (_State)
+                {
+                    case State.Maximazed:
+                    {
+                        StartMove();
+                        break;
+                    }
+                    case State.Minimazed:
+                    {
+                        BackMove();
+                        break;
+                    }
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
         }
 
         protected abstract void GetNextPos(int nextPos);
 
-        public void StartMove()
+        protected abstract void InitStartParams();
+
+        protected abstract void InitEndParams();
+
+        void StartMove()
         {
+            _timer.Interval = 60;
+            InitStartParams();
             _timer.Start();
         }
+
+        void BackMove()
+        {
+            _timer.Interval = 60;
+            InitEndParams();
+            _timer.Start();
+        }
+
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
