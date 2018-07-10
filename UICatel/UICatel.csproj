@@ -138,26 +138,31 @@
     <Compile Include="Controls\CustomForm.xaml.cs">
       <DependentUpon>CustomForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataBase\DbSession.cs">
+      <DependentUpon>TranslateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\Language.cs">
+      <DependentUpon>TranslateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\TranslateModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TranslateModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\TranslateModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TranslateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\TranslateModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TranslateModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\Words.cs">
+      <DependentUpon>TranslateModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Extensions.cs" />
-    <Compile Include="Models\Word.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Word.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Word.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Word.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Word.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Word.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Words.cs">
-      <DependentUpon>Word.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Session.cs" />
     <Compile Include="Shader\NoiseEffect.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
@@ -188,12 +193,12 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <EntityDeploy Include="Models\Word.edmx">
+    <EntityDeploy Include="DataBase\TranslateModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Word.Designer.cs</LastGenOutput>
+      <LastGenOutput>TranslateModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Models\Word.edmx.diagram">
-      <DependentUpon>Word.edmx</DependentUpon>
+    <None Include="DataBase\TranslateModel.edmx.diagram">
+      <DependentUpon>TranslateModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Readme.txt" />
@@ -205,22 +210,23 @@
     <None Include="Shader\Noise.ps" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Models\" />
     <Folder Include="Services\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\icon.ico" />
+    <Content Include="DataBase\TranslateModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TranslateModel.edmx</DependentUpon>
+      <LastGenOutput>TranslateModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataBase\TranslateModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TranslateModel.edmx</DependentUpon>
+      <LastGenOutput>TranslateModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Shader\Noise.fx" />
     <Resource Include="Images\noise.png" />
-    <Content Include="Models\Word.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Word.edmx</DependentUpon>
-      <LastGenOutput>Word.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Word.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Word.edmx</DependentUpon>
-      <LastGenOutput>Word.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -7,15 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UICatel.Models
+namespace UICatel.DataBase
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Words
+    public partial class Language
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Language()
+        {
+            this.Words = new HashSet<Words>();
+        }
+    
         public long ID { get; set; }
-        public string Word { get; set; }
-        public decimal? Date { get; set; }
+        public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Words> Words { get; set; }
     }
 }

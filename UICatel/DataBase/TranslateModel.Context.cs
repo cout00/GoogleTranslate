@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UICatel.Models
+namespace UICatel.DataBase
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class wordsEntities : DbContext
+    public partial class TranslatorEntity : DbContext
     {
-        public wordsEntities()
-            : base("name=wordsEntities")
+        public TranslatorEntity()
+            : base("name=TranslatorEntity")
         {
         }
     
@@ -25,6 +25,8 @@ namespace UICatel.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Language> Language { get; set; }
+        public virtual DbSet<DbSession> Session { get; set; }
         public virtual DbSet<Words> Words { get; set; }
     }
 }

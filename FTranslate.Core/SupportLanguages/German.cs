@@ -9,6 +9,20 @@ namespace FTranslate.Core.SupportLanguages
 {
     public class German :Language
     {
+
+
+        public override LanguageDBCode Code
+        {
+            get {
+                return LanguageDBCode.German;
+            }
+
+            set {
+                Code = LanguageDBCode.German;
+            }
+        }
+
+
         protected German(){
             Iso6311LanguageCode = "de";
             Iso6312LanguageCode = "deu";

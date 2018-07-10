@@ -10,6 +10,16 @@ namespace FTranslate.Core.SupportLanguages
 
     public class Russian :Language
     {
+        public override LanguageDBCode Code
+        {
+            get {
+                return LanguageDBCode.Russian;
+            }
+
+            set {
+                Code = LanguageDBCode.Russian;
+            }
+        }
         protected Russian()
         {
             Iso6311LanguageCode = "ru";

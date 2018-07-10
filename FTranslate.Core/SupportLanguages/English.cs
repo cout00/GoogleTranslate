@@ -10,6 +10,18 @@ namespace FTranslate.Core.SupportLanguages
 {
     public class English : Language
     {
+        public override LanguageDBCode Code
+        {
+            get {
+                return LanguageDBCode.English;
+            }
+
+            set {
+                Code=LanguageDBCode.English;
+
+            }
+        }
+
         protected English()
         {
             Iso6311LanguageCode = "en";

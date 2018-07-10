@@ -8,7 +8,22 @@ using FTranslate.Core.BaseClasses;
 namespace FTranslate.Core.SupportLanguages
 {
     public class French :Language
-    {        
+    {
+
+        public override LanguageDBCode Code
+        {
+            get {
+                return LanguageDBCode.French;
+            }
+
+            set {
+                Code = LanguageDBCode.French;
+
+            }
+        }
+
+
+
         private French()
         {            
             Iso6311LanguageCode = "fr";

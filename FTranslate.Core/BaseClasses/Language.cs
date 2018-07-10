@@ -20,13 +20,25 @@ namespace FTranslate.Core.BaseClasses
         Gost77597
     }
 
+
+    public enum LanguageDBCode
+    {
+        English=1,
+        Russian,
+        French,
+        German,
+    }
+
+
     [SingletonPool()]
     public abstract class Language
     {
         public string Text { get; set; }
         public LanguageCodeSystem CodeSystem { get; set; }
         public string LemmantizedString { get; set; }
-        
+
+        public abstract LanguageDBCode Code { get; set; }
+
         protected string Iso6311LanguageCode;
         protected string Iso6312LanguageCode;
         protected string Iso6313LanguageCode;
@@ -55,7 +67,8 @@ namespace FTranslate.Core.BaseClasses
             {
                 LemmantizedString= _lemmatizer.Lemmatize(Text);
             }
-            LemmantizedString="";
+            else
+                LemmantizedString="";
         }
 
 

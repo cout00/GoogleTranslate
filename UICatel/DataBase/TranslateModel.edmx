@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище TranslatorModel" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\aizik\Source\Repos\GoogleTranslate\DBWorkStation\words.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="Session">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="ID_TargetWord" Type="integer" />
+          <Property Name="ID_ResultWord" Type="integer" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Words">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Word" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Date" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="Id_Language" Type="integer" />
+        </EntityType>
+        <Association Name="FK_Session_0_0">
+          <End Role="Words" Type="Self.Words" Multiplicity="0..1" />
+          <End Role="Session" Type="Self.Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Words">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="ID_ResultWord" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_1_0">
+          <End Role="Words" Type="Self.Words" Multiplicity="0..1" />
+          <End Role="Session" Type="Self.Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Words">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="ID_TargetWord" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Words_0_0">
+          <End Role="Language" Type="Self.Language" Multiplicity="0..1" />
+          <End Role="Words" Type="Self.Words" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Words">
+              <PropertyRef Name="Id_Language" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище TranslatorModelContainer">
+          <EntitySet Name="Language" EntityType="Self.Language" store:Type="Tables" />
+          <EntitySet Name="Session" EntityType="Self.Session" store:Type="Tables" />
+          <EntitySet Name="Words" EntityType="Self.Words" store:Type="Tables" />
+          <AssociationSet Name="FK_Session_0_0" Association="Self.FK_Session_0_0">
+            <End Role="Words" EntitySet="Words" />
+            <End Role="Session" EntitySet="Session" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_1_0" Association="Self.FK_Session_1_0">
+            <End Role="Words" EntitySet="Words" />
+            <End Role="Session" EntitySet="Session" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Words_0_0" Association="Self.FK_Words_0_0">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Words" EntitySet="Words" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TranslatorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Words" Relationship="Self.FK_Words_0_0" FromRole="Language" ToRole="Words" />
+        </EntityType>
+        <EntityType Name="DbSession">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="ID_TargetWord" Type="Int64" />
+          <Property Name="ID_ResultWord" Type="Int64" />
+          <Property Name="Date" Type="DateTime" />
+          <NavigationProperty Name="WordResult" Relationship="Self.FK_Session_0_0" FromRole="Session" ToRole="Words" />
+          <NavigationProperty Name="WordTarget" Relationship="Self.FK_Session_1_0" FromRole="Session" ToRole="Words" />
+        </EntityType>
+        <EntityType Name="Words">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Word" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="Id_Language" Type="Int64" />
+          <NavigationProperty Name="Language" Relationship="Self.FK_Words_0_0" FromRole="Words" ToRole="Language" />
+          <NavigationProperty Name="SessionsResult" Relationship="Self.FK_Session_0_0" FromRole="Words" ToRole="Session" />
+          <NavigationProperty Name="SessionsTarget" Relationship="Self.FK_Session_1_0" FromRole="Words" ToRole="Session" />
+        </EntityType>
+        <Association Name="FK_Words_0_0">
+          <End Role="Language" Type="Self.Language" Multiplicity="0..1" />
+          <End Role="Words" Type="Self.Words" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Words">
+              <PropertyRef Name="Id_Language" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_0_0">
+          <End Role="Words" Type="Self.Words" Multiplicity="0..1" />
+          <End Role="Session" Type="TranslatorModel.DbSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Words">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="ID_ResultWord" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_1_0">
+          <End Role="Words" Type="Self.Words" Multiplicity="0..1" />
+          <End Role="Session" Type="TranslatorModel.DbSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Words">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="ID_TargetWord" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TranslatorEntity" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Language" EntityType="Self.Language" />
+          <EntitySet Name="Session" EntityType="TranslatorModel.DbSession" />
+          <EntitySet Name="Words" EntityType="Self.Words" />
+          <AssociationSet Name="FK_Words_0_0" Association="Self.FK_Words_0_0">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Words" EntitySet="Words" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_0_0" Association="Self.FK_Session_0_0">
+            <End Role="Words" EntitySet="Words" />
+            <End Role="Session" EntitySet="Session" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_1_0" Association="Self.FK_Session_1_0">
+            <End Role="Words" EntitySet="Words" />
+            <End Role="Session" EntitySet="Session" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище TranslatorModelContainer" CdmEntityContainer="TranslatorEntity">
+          <EntitySetMapping Name="Language">
+            <EntityTypeMapping TypeName="TranslatorModel.Language">
+              <MappingFragment StoreEntitySet="Language">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Session">
+            <EntityTypeMapping TypeName="TranslatorModel.DbSession">
+              <MappingFragment StoreEntitySet="Session">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_TargetWord" ColumnName="ID_TargetWord" />
+                <ScalarProperty Name="ID_ResultWord" ColumnName="ID_ResultWord" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Words">
+            <EntityTypeMapping TypeName="TranslatorModel.Words">
+              <MappingFragment StoreEntitySet="Words">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Word" ColumnName="Word" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id_Language" ColumnName="Id_Language" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

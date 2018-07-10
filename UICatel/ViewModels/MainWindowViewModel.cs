@@ -9,8 +9,9 @@ using FTranslate.Core;
 using FTranslate.Core.BaseClasses;
 using FTranslate.Core.ObjectPool;
 using FTranslate.Core.Yandex;
-using UICatel.Models;
+using UICatel.DataBase;
 using UICatel.Views;
+using Language = FTranslate.Core.BaseClasses.Language;
 
 namespace UICatel.ViewModels
 {
@@ -19,6 +20,8 @@ namespace UICatel.ViewModels
     public class MainWindowViewModel :ViewModelBase
     {
 
+        //wordsEntities wordsEntities = new wordsEntities();
+        DataBase.TranslatorEntity _translatorEntity=new TranslatorEntity();       
         public MainWindowViewModel()
         {
             LanguageCollectionTarget =new ObservableCollection<object>(Pool.GetByParentClass(typeof(Language)));
@@ -27,8 +30,6 @@ namespace UICatel.ViewModels
             SelectedLangTarget = Pool.SingletonPool.GetPoolObject("English");
             WindowsApiHelper.SetKeyBoardHook();
             WindowsApiHelper.OnKeyPush += WindowsApiHelper_OnKeyPush;
-
-
         }
 
         private void WindowsApiHelper_OnKeyPush(object sender, WindowsApiHelper.KeyPressedArgs e)
@@ -36,10 +37,18 @@ namespace UICatel.ViewModels
             WindowsApiHelper.SendGetText();
             var dumpText = Clipboard.GetText();
             ((Language) SelectedLangMain).Text = dumpText;
-            ((Language)(SelectedLangTarget)).Text=String.Empty;
+            ((Language)(SelectedLangTarget)).Text= string.Empty;
             Parser pars =new YandexParser(new YandexHttpRequest(), (Language)SelectedLangMain, (Language)SelectedLangTarget);
             var resulteNotTranslatedException= pars.Translate();
             ResultString = ((Language) (SelectedLangTarget)).Text;
+            //Words wordsMain=new Words() {Id_Language = (int)((Language)SelectedLangMain).Code};
+            //Words wordsTarget = new Words() { Id_Language = (int)((Language)SelectedLangTarget).Code };
+
+            //Session session=new Session() {};
+            var newWordMain=_translatorEntity.Words.Add(new Words() {Date = (decimal?)DateTime.Now.ToOADate(), Word = "me"});
+            var newWordTarget =_translatorEntity.Words.Add(new Words() { Date = (decimal?)DateTime.Now.ToOADate(), Word = "met" });
+            _translatorEntity.Session.Add(new DbSession() {WordResult = newWordMain, WordTarget = newWordTarget});
+            _translatorEntity.SaveChanges();
         }
 
         #region LanguageCollectionTarget property
@@ -111,23 +120,13 @@ namespace UICatel.ViewModels
 
         #endregion
 
-
-        //public override string Title { get { return "UICatel"; } }
-
-        // TODO: Register models with the vmpropmodel codesnippet
-        // TODO: Register view model properties with the vmprop or vmpropviewmodeltomodel codesnippets
-        // TODO: Register commands with the vmcommand or vmcommandwithcanexecute codesnippets
-
         protected override async Task InitializeAsync()
         {
             await base.InitializeAsync();
-            //await Pool.ActivatePoolAsync(typeof(Language));
-            //wordsEntities wordsEntities=new wordsEntities();
-            //wordsEntities.Words.Load();            
+            await _translatorEntity.Words.LoadAsync();                                    
         }
         protected override async Task CloseAsync()
-        {// TODO: unsubscribe from events here
-
+        {            
             WindowsApiHelper.RemoveKeyBoardHook();
             await base.CloseAsync();
         }
